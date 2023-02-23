@@ -1,0 +1,50 @@
+.mainContainer {
+    /* background-color:antiquewhite; */
+    /* flex: 1;
+    display: flex; */
+    /* width: 100%; */
+    height: 20vw;
+}
+
+.tophead{
+    margin-top: 3vw;
+}
+
+.rwd-table {
+    /* background: #34495E; */
+    /* color: #fff; */
+    border-radius: .4em;
+    overflow: hidden;
+}
+
+.mainBody{
+    margin: auto;
+    max-width: 90%;
+    background-color:antiquewhite;
+    margin-top: 3vw;
+    border-radius: 10px;
+    height: 43vw;
+    padding: 10px;
+    overflow: hidden;
+}
+
+table tr {
+    border-top: 1px solid #2d2a2a;
+    /* border-bottom: 1px solid #2d2a2a; */
+    padding: auto;
+  }
+
+  table tr th {
+    text-align: center;
+    align-self: center;
+    padding: 10px;
+  }
+  table tr td {
+    text-align: center;
+    align-self: center;
+    padding: 10px;
+  }
+
+  .rwd-table{
+    width: 100%;
+  }

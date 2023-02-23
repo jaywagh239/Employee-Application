@@ -1,0 +1,26 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "Pankaj",
+      "salary": "10000"
+    },
+    {
+      "name": "David",
+      "salary": "5000",
+      "id": 2
+    }
+  ],
+  "signUp": [
+    {
+      "name": "jayesh@gmail.com",
+      "password": "12345678",
+      "id": 1
+    },
+    {
+      "name": "jayesh",
+      "password": "12345678",
+      "id": 2
+    }
+  ]
+}
