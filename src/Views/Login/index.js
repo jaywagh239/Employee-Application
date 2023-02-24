@@ -32,8 +32,8 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!username.value && !password.value) {
-      alert("Please add all details");
+    if (!username.value || !password.value) {
+      toast.error("Please enter email and password.");
       return;
     }
     if (
@@ -113,7 +113,6 @@ const Login = () => {
                   })
                 }
                 minLength={4}
-                required
               />
             </div>
 
