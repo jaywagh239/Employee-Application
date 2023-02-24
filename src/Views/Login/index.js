@@ -142,5 +142,3 @@ const Login = () => {
 };
 
 export default Login;
-// https://www.youtube.com/watch?v=5PfvoAj-SMk&t=453s
-// https://github.com/trickjsprogram/rtk-query-starter
