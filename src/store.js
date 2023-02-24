@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { persistStore, persistReducer } from "redux-persist";
-import { EmployeeApi } from "./api/employeeApi";
+import { employeeApi } from "./api/employeeApi";
 import { rootReducres } from "./reducres";
 import storage from "redux-persist/lib/storage";
 
@@ -18,7 +18,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(EmployeeApi.middleware),
+    }).concat(employeeApi.middleware),
 });
 
 setupListeners(store.dispatch);

@@ -6,8 +6,8 @@ const Home = () => {
   const [closeAddModal, setCloseAddModal] = useState(false);
   let tableArr = [1, 2, 3, 4, 5, 6, 7, 8];
 
-  // const { data, isLoading, error} = useGetAllEmployeeQuery();
-
+  // const { data, isLoading, error } = useGetAllEmployeeQuery();
+  // console.log("/////////data", data);
   return (
     <div>
       <div style={{}} className="mainContainer">
@@ -27,7 +27,7 @@ const Home = () => {
           </div>
 
           <div style={{ marginTop: "25px", width: "100%" }}>
-            <table class="rwd-table">
+            <table className="rwd-table">
               <tr>
                 <th style={{ width: "5%" }}>ID</th>
                 <th style={{ width: "25%" }}>First Name</th>

@@ -13,13 +13,18 @@
   ],
   "signUp": [
     {
-      "name": "jayesh@gmail.com",
+      "email": "jayesh@gmail.com",
       "password": "12345678",
       "id": 1
     },
     {
-      "name": "jayesh",
+      "email": "abcd@gmail.com",
       "password": "12345678",
+      "id": 2
+    },
+    {
+      "email": "sumit@gmail.com",
+      "password": "qwerty123",
       "id": 2
     }
   ]

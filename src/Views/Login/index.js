@@ -30,17 +30,6 @@ const Login = () => {
 
   const { data } = useGetAllUserQuery();
 
-  // const userLogin = useSelector((state) => state.auth);
-  // let { user, isAuthenticated } = userLogin;
-
-  // useEffect(() => {
-  //   if (user && user.email) {
-  //     toast.success(`${user.email} logged in successfully`);
-  //   }
-  // }, [user]);
-
-  // const [signUp, { isLoading: loading, Success: success }] = useSignUpMutation();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!username.value && !password.value) {
@@ -49,7 +38,9 @@ const Login = () => {
     }
     if (
       data?.some((user) => {
-        return user.name === username.value && user.password === password.value;
+        return (
+          user.email === username.value && user.password === password.value
+        );
       })
     ) {
       let obj = {
@@ -62,7 +53,7 @@ const Login = () => {
       dispatch(userAuthentication({ obj }));
       toast.success("Login sucessfully.");
       setTimeout(() => {
-        navigate("/home");
+        navigate("/dashboard");
       }, "5000");
     } else {
       toast.error("Login failed.");

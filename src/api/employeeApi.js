@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const EmployeeApi = createApi({
+export const employeeApi = createApi({
   reducerPath: "employeeApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000" }),
 
@@ -8,10 +8,8 @@ export const EmployeeApi = createApi({
     getAllEmployee: builder.query({
       query: () => "/employees",
     }),
-    // getProduct: builder.query({
-    //   query: (productName) => `products/search?q=${productName}`,
-    // }),
   }),
+
   endpoints: (builder) => ({
     signUp: builder.mutation({
       query: (data) => ({
@@ -21,6 +19,17 @@ export const EmployeeApi = createApi({
       }),
     }),
   }),
+
+  endpoints: (builder) => ({
+    addEmployee: builder.mutation({
+      query: (data) => ({
+        url: `/employees`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+  }),
+
   endpoints: (builder) => ({
     getAllUser: builder.query({
       query: () => "/signUp",
@@ -28,8 +37,5 @@ export const EmployeeApi = createApi({
   }),
 });
 
-export const {
-  useLazyGetAllEmployeeQuery,
-  useSignUpMutation,
-  useGetAllUserQuery,
-} = EmployeeApi;
+export const { useGetAllEmployeeQuery, useSignUpMutation, useGetAllUserQuery } =
+  employeeApi;

@@ -1,0 +1,24 @@
+.table {
+    width: 100%  !important;
+
+    td {
+        padding: 10px;
+    }
+    .icon {
+        margin: 5px;
+        cursor: pointer;
+    }
+    .red{
+        color: red;
+    }
+    .blue{
+        color: rgba(29, 80, 143, 0.747);
+    }
+
+    .darkblue{
+        color: #2d0186;
+    }
+    .mainlogo {
+        font-size: 40px;
+    }
+}
