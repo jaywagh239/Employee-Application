@@ -1,18 +1,22 @@
 .mainContainer {
-    /* background-color:antiquewhite; */
-    /* flex: 1;
-    display: flex; */
-    /* width: 100%; */
     height: 20vw;
 }
-
+.navbar-brand {
+  margin-left: 20px;
+}
+.display-3 {
+  font-size: 35px !important;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.btn-action {
+  margin: 5px;
+}
 .tophead{
     margin-top: 3vw;
 }
 
 .rwd-table {
-    /* background: #34495E; */
-    /* color: #fff; */
     border-radius: .4em;
     overflow: hidden;
 }

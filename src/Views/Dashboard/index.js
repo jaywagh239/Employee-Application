@@ -24,7 +24,7 @@ const Dashboard = () => {
 
   const logoutUser = () => {
     dispatch(logout());
-    navigate("/");
+    navigate("/login");
   };
   return (
     <div className="home">
@@ -49,7 +49,9 @@ const Dashboard = () => {
             <div className="listTitle">
               4 active integrations for this organisation
             </div>
-            <button className="button">Add Integration</button>
+            <button className="button" onClick={() => navigate("/home")}>
+              Add Integration
+            </button>
           </div>
 
           <Table />

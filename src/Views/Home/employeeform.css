@@ -1,4 +1,12 @@
-
 .form-group{
     margin-top: 15px;
+}
+
+.modalFooter{
+    align-items: flex-end;
+    margin-top: 20px;
+    display: block;
+    justify-content: flex-end;
+    width: 100%;
+    align-self: flex-end;
 }
