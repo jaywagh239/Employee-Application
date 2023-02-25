@@ -123,7 +123,7 @@ const Login = () => {
                 name="vehicle1"
                 value="Bike"
               />
-              <label for="vehicle1">Remember the password</label>
+              <label>Remember the password</label>
               <br></br>
             </div>
 
@@ -142,3 +142,5 @@ const Login = () => {
 };
 
 export default Login;
+// https://www.youtube.com/watch?v=5PfvoAj-SMk&t=453s
+// https://github.com/trickjsprogram/rtk-query-starter

@@ -2,12 +2,37 @@ import React, { useEffect, useState } from "react";
 import RegisterModal from "./RegisterModal";
 import "./explore.css";
 import { useGetAllEmployeeQuery } from "../../api/employeeApi";
+import axios from "axios";
 const Home = () => {
   const [closeAddModal, setCloseAddModal] = useState(false);
+  const [employee, setEmployee] = useState([]);
   let tableArr = [1, 2, 3, 4, 5, 6, 7, 8];
 
-  // const { data, isLoading, error } = useGetAllEmployeeQuery();
-  // console.log("/////////data", data);
+  useEffect(() => {
+    async function getAllStudent() {
+      try {
+        const students = await axios.get("http://localhost:4000/employees");
+        setEmployee(students.data);
+      } catch (error) {
+        console.log("Something is Wrong");
+      }
+    }
+    getAllStudent();
+  }, []);
+
+  // const deleteEmployee = (data) => {
+  //   console.log("delete data", data);
+  // };
+
+  const deleteEmployee = async (id) => {
+    await axios.delete(`http://localhost:4000/employees/${id}`);
+    var newstudent = employee?.filter((item) => {
+      // console.log(item);
+      return item.id !== id;
+    });
+    setEmployee(newstudent);
+  };
+
   return (
     <div>
       <div style={{}} className="mainContainer">
@@ -35,21 +60,21 @@ const Home = () => {
                 <th style={{ width: "15%" }}>Mobile no</th>
                 <th style={{}}>Action</th>
               </tr>
-              {tableArr.map((item, index) => {
+              {employee.map((item, index) => {
                 let backgroundColor = "";
                 return (
-                  <tr style={{}}>
+                  <tr style={{}} key={index + "_emp"}>
                     <td style={{ width: "30px" }} data-th="Movie Title">
-                      {index + 1}
+                      {item?.id}
                     </td>
                     <td style={{ width: "130px" }} data-th="Genre">
-                      {"Jayesh wagh"}
+                      {item?.name}
                     </td>
                     <td style={{ width: "230px" }} data-th="Year">
-                      {"jayeshwagh@gmail.com"}
+                      {item?.email}
                     </td>
                     <td style={{ width: "100px" }} data-th="Gross">
-                      {"1234567890"}
+                      {item?.mobile}
                     </td>
                     <td
                       style={{ width: "30px", justifyContent: "center" }}
@@ -66,7 +91,10 @@ const Home = () => {
                           <button className="btn btn-warning"> {"Edit"}</button>
                         </span>
                         <span style={{ marginRight: "20px" }}>
-                          <button className="btn btn-danger">
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => deleteEmployee(item.id)}
+                          >
                             {" "}
                             {"Delete"}
                           </button>

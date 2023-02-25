@@ -1,13 +1,9 @@
 {
   "employees": [
     {
-      "id": 1,
-      "name": "Pankaj",
-      "salary": "10000"
-    },
-    {
       "name": "David",
-      "salary": "5000",
+      "email": "david@gmail.com",
+      "mobile": "9876543211",
       "id": 2
     }
   ],
