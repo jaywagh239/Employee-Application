@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
-
 const SimpleModal = (props) => {
   const {
     show,

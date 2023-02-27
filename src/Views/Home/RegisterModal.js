@@ -70,29 +70,17 @@ const RegisterModal = ({
     >
       <form className="form-horizontal" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label for="firstName">First Name</label>
+          <label for="firstName">Name</label>
           <input
             type="text"
             name="name"
             className="form-control"
             id="firstName"
-            aria-describedby="emailHelp"
-            placeholder="Enter first name"
+            placeholder="Enter name"
             value={formData.name}
             onChange={changeHandler}
           />
         </div>
-        {/* <div className="form-group">
-          <label for="lastName">Last Name</label>
-          <input
-            style={{ marginTop: "10px" }}
-            type="text"
-            className="form-control"
-            id="lastName"
-            aria-describedby="emailHelp"
-            placeholder="Enter last name"
-          />
-        </div> */}
         <div className="form-group">
           <label for="emailAddress">Email address</label>
           <input
@@ -102,7 +90,6 @@ const RegisterModal = ({
             className="form-control"
             id="emailAddress"
             value={formData.email}
-            aria-describedby="emailHelp"
             placeholder="Enter email"
             onChange={changeHandler}
           />
@@ -116,7 +103,6 @@ const RegisterModal = ({
             className="form-control"
             id="mobileNumber"
             value={formData.mobile}
-            aria-describedby="emailHelp"
             placeholder="Enter mobile number"
             onChange={changeHandler}
           />
@@ -130,7 +116,6 @@ const RegisterModal = ({
             className="form-control"
             id="mobileNumber"
             value={formData.designation}
-            aria-describedby="emailHelp"
             placeholder="Enter designation"
             onChange={changeHandler}
           />

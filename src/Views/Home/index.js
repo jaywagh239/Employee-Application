@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from "react";
 import RegisterModal from "./RegisterModal";
-import "./explore.css";
+import Skeleton from "../../Components/Skeleton";
+import Pagination from "../../Components/Pagination";
+
+import "./explore.scss";
 import { useGetAllEmployeeQuery } from "../../api/employeeApi";
 import axios from "axios";
 const Home = () => {
   const [closeAddModal, setCloseAddModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [employee, setEmployee] = useState([]);
+  const [employeeList, setemployeeList] = useState([]);
   const [singleRowData, setSingleRowData] = useState(null);
+
+  const [pageSize, setpageSize] = useState(5);
+  const [currentPage, setcurrentPage] = useState(1);
+  const [sortColumn, setsortColumn] = useState({ path: "name", order: "asc" });
+
+  // searchQuery: ""
 
   useEffect(() => {
     async function getAllEmployee() {
       try {
         const employee = await axios.get("http://localhost:4000/employees");
-        setEmployee(employee.data);
+        setemployeeList(employee.data);
       } catch (error) {
         console.log("Something is Wrong");
       }
@@ -23,11 +32,11 @@ const Home = () => {
 
   const deleteEmployee = async (id) => {
     await axios.delete(`http://localhost:4000/employees/${id}`);
-    var newEmployee = employee?.filter((item) => {
+    const newEmployeeList = employeeList?.filter((item) => {
       // console.log(item);
       return item.id !== id;
     });
-    setEmployee(newEmployee);
+    setemployeeList(newEmployeeList);
   };
 
   const createEmp = async (data) => {
@@ -69,11 +78,57 @@ const Home = () => {
   const getEmp = async () => {
     try {
       const employee = await axios.get("http://localhost:4000/employees");
-      setEmployee(employee.data);
+      setemployeeList(employee.data);
     } catch (error) {
       console.log("Something is Wrong");
     }
   };
+  const handlePageChange = (page) => {
+    setcurrentPage(page);
+  };
+
+  const sortByColumn = (path) => {
+    const newsortColumn = { ...sortColumn };
+    if (sortColumn.path === path) {
+      newsortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
+    } else {
+      newsortColumn.path = path;
+      newsortColumn.order = "asc";
+    }
+    setsortColumn(newsortColumn);
+  };
+
+  const getPagedData = () => {
+    // let filtered = employeeList;
+    // if(searchQuery)
+    //     filtered = allMovies.filter(m => (m.title.toLowerCase().startsWith(searchQuery.toLowerCase())));
+
+    let sortedList = employeeList;
+    if (sortColumn.order == "asc") {
+      sortedList = employeeList.sort((a, b) =>
+        a[sortColumn.path] > b[sortColumn.path]
+          ? 1
+          : b[sortColumn.path] > a[sortColumn.path]
+          ? -1
+          : 0
+      );
+    } else {
+      sortedList = employeeList.sort((a, b) =>
+        a[sortColumn.path] > b[sortColumn.path]
+          ? -1
+          : b[sortColumn.path] > a[sortColumn.path]
+          ? 1
+          : 0
+      );
+    }
+
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+    const paginatedItems = sortedList.slice(start, end);
+    return { totalCount: employeeList.length, data: paginatedItems };
+  };
+
+  const { totalCount, data: paginatedItems } = getPagedData();
 
   return (
     <div>
@@ -99,8 +154,7 @@ const Home = () => {
           <div className="container">
             <h3 className="display-3">Employee List</h3>
             <p>
-              List of Employees where you can add / edit / delete employees or
-              search sort list.
+              List of Employees where you can add / edit / delete employees.
             </p>
             <hr />
           </div>
@@ -117,102 +171,109 @@ const Home = () => {
                   Add Employee
                 </button>
               </p>
-
-              <table className="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th style={{ width: "5%" }}>ID</th>
-                    <th style={{ width: "15%" }}>Name</th>
-                    <th style={{ width: "20%" }}>Email</th>
-                    <th style={{ width: "10%" }}>Mobile Number</th>
-                    <th style={{ width: "15%" }}>Designation</th>
-                    <th style={{ width: "10%" }}>Department</th>
-                    <th style={{ width: "20%" }}>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {employee.map((item, index) => {
-                    let backgroundColor = "";
-                    return (
-                      <tr key={index + "_emp"}>
-                        <td style={{ width: "30px" }} data-th="Movie Title">
-                          {item?.id}
-                        </td>
-                        <td style={{ width: "130px" }} data-th="Genre">
-                          {item?.name} {item?.lastName}
-                        </td>
-                        <td style={{ width: "230px" }} data-th="Year">
-                          {item?.email}
-                        </td>
-                        <td style={{ width: "100px" }} data-th="Gross">
-                          {item?.mobile}
-                        </td>
-                        <td style={{ width: "100px" }} data-th="Gross">
-                          {item?.designation}
-                        </td>
-                        <td style={{ width: "100px" }} data-th="Gross">
-                          {item?.department}
-                        </td>
-                        <td
-                          style={{ width: "30px", justifyContent: "center" }}
-                          data-th="Year"
-                        >
-                          <button
-                            className="btn btn-warning btn-sm btn-action"
-                            onClick={() => {
-                              setCloseAddModal(!closeAddModal);
-                              setEditMode(true);
-                              setSingleRowData(item);
-                            }}
+              {paginatedItems.length > 0 ? (
+                <table className="table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th
+                        className="sort-head"
+                        style={{ width: "5%" }}
+                        onClick={() => sortByColumn("id")}
+                      >
+                        ID
+                      </th>
+                      <th
+                        className="sort-head"
+                        style={{ width: "15%" }}
+                        onClick={() => sortByColumn("name")}
+                      >
+                        Name
+                      </th>
+                      <th
+                        className="sort-head"
+                        style={{ width: "20%" }}
+                        onClick={() => sortByColumn("email")}
+                      >
+                        Email
+                      </th>
+                      <th
+                        className="sort-head"
+                        style={{ width: "10%" }}
+                        onClick={() => sortByColumn("mobile")}
+                      >
+                        Mobile Number
+                      </th>
+                      <th
+                        className="sort-head"
+                        style={{ width: "15%" }}
+                        onClick={() => sortByColumn("designation")}
+                      >
+                        Designation
+                      </th>
+                      <th
+                        className="sort-head"
+                        style={{ width: "10%" }}
+                        onClick={() => sortByColumn("department")}
+                      >
+                        Department
+                      </th>
+                      <th className="sort-head" style={{ width: "20%" }}>
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {paginatedItems.map((item, index) => {
+                      return (
+                        <tr key={index + "_emp"}>
+                          <td style={{ width: "30px" }}>{item?.id}</td>
+                          <td style={{ width: "130px" }}>{item?.name}</td>
+                          <td style={{ width: "230px" }}>{item?.email}</td>
+                          <td style={{ width: "100px" }}>{item?.mobile}</td>
+                          <td style={{ width: "100px" }}>
+                            {item?.designation}
+                          </td>
+                          <td style={{ width: "100px" }}>{item?.department}</td>
+                          <td
+                            style={{ width: "30px", justifyContent: "center" }}
+                            data-th="Year"
                           >
-                            Edit
-                          </button>
-                          <button
-                            className="btn btn-danger btn-sm btn-action"
-                            onClick={() => deleteEmployee(item.id)}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                            <button
+                              className="btn btn-warning btn-sm btn-action"
+                              onClick={() => {
+                                setCloseAddModal(!closeAddModal);
+                                setEditMode(true);
+                                setSingleRowData(item);
+                              }}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              className="btn btn-danger btn-sm btn-action"
+                              onClick={() => deleteEmployee(item.id)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              ) : (
+                <Skeleton numRows={5} />
+              )}
             </div>
           </div>
 
           <div className="row">
             <div className="col-md-12">
-              <nav aria-label="Page navigation example">
-                <ul className="pagination justify-content-end">
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      Previous
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      Next
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <Pagination
+                itemsCount={totalCount}
+                pageSize={pageSize}
+                onPageChange={handlePageChange}
+                currentPage={currentPage}
+              />
             </div>
           </div>
         </div>

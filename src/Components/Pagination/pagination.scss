@@ -1,0 +1,9 @@
+.mainnavbar {
+    justify-content: flex-end;
+
+    .disabled {
+        cursor: pointer;
+        pointer-events: none;
+    }
+}
+
